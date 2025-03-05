@@ -3,6 +3,9 @@
 ## Overview
 **inNet** is an intent-driven network management tool designed to implement the **TM Forum's TMF921 Intent Management API**. It enables autonomous management of network resources across the **cloud-edge continuum**, ensuring efficient resource allocation, and dynamic resource and service level adaptations.
 
+## APIs
+- As stated before, inNet will follow TMF921 Intent Management API (v5). The specification in OpenAPI format is available here: https://www.tmforum.org/oda/open-apis/directory/intent-management-api-TMF921/v5.0
+
 ## Key Features
 - **TMF921 Compliance**: Implements the TM Forum's standard for intent management.
 - **Intent-Driven Operations**: Allows users to define high-level network intents without specifying low-level configurations.
