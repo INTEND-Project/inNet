@@ -1,1 +1,162 @@
 
+@prefix nxw: <http://nextworks.it/intent#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+####################
+# Classes
+####################
+
+nxw:Intent a owl:Class .
+nxw:Expectation a owl:Class .
+nxw:QoSRequirement a owl:Class .
+nxw:SLO a owl:Class .
+nxw:SecurityRequirement a owl:Class .
+nxw:ContextualInfo a owl:Class .
+nxw:IntentOwner a owl:Class .
+nxw:IntentHandler a owl:Class .
+nxw:IntentReport a owl:Class .
+nxw:Status a owl:Class .
+
+# Constraint superclass
+nxw:Constraint a owl:Class .
+
+# Subclasses of Constraint
+nxw:CostConstraint a owl:Class ;
+    rdfs:subClassOf nxw:Constraint .
+
+nxw:TimeConstraint a owl:Class ;
+    rdfs:subClassOf nxw:Constraint .
+
+####################
+# Object Properties
+####################
+
+nxw:hasExpectation a owl:ObjectProperty ;
+    rdfs:domain nxw:Intent ;
+    rdfs:range nxw:Expectation .
+
+nxw:hasQoSRequirement a owl:ObjectProperty ;
+    rdfs:domain nxw:Expectation ;
+    rdfs:range nxw:QoSRequirement .
+
+nxw:hasSLO a owl:ObjectProperty ;
+    rdfs:domain nxw:Expectation ;
+    rdfs:range nxw:SLO .
+
+nxw:hasSecurityRequirement a owl:ObjectProperty ;
+    rdfs:domain nxw:Expectation ;
+    rdfs:range nxw:SecurityRequirement .
+
+nxw:hasConstraint a owl:ObjectProperty ;
+    rdfs:domain nxw:Expectation ;
+    rdfs:range nxw:Constraint .
+
+nxw:hasContext a owl:ObjectProperty ;
+    rdfs:domain nxw:Intent ;
+    rdfs:range nxw:ContextualInfo .
+
+nxw:hasOwner a owl:ObjectProperty ;
+    rdfs:domain nxw:Intent ;
+    rdfs:range nxw:IntentOwner .
+
+nxw:hasHandler a owl:ObjectProperty ;
+    rdfs:domain nxw:Intent ;
+    rdfs:range nxw:IntentHandler .
+
+nxw:hasReport a owl:ObjectProperty ;
+    rdfs:domain nxw:Intent ;
+    rdfs:range nxw:IntentReport .
+
+nxw:hasStatus a owl:ObjectProperty ;
+    rdfs:domain nxw:Intent ;
+    rdfs:range nxw:Status .
+
+####################
+# Data Properties
+####################
+
+# Metadata
+nxw:version a owl:DatatypeProperty ;
+    rdfs:domain nxw:Intent ;
+    rdfs:range xsd:string .
+
+nxw:content a owl:DatatypeProperty ;
+    rdfs:domain nxw:Intent ;
+    rdfs:range xsd:string .
+
+# QoSRequirement fields
+nxw:latency a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:decimal .
+
+nxw:jitter a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:decimal .
+
+nxw:availability a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:decimal .
+
+nxw:bandwidth a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:decimal .
+
+nxw:packetLossRate a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:decimal .
+
+# Status tracking
+nxw:statusValue a owl:DatatypeProperty ;
+    rdfs:domain nxw:Status ;
+    rdfs:range xsd:string .
+
+nxw:statusTimestamp a owl:DatatypeProperty ;
+    rdfs:domain nxw:Status ;
+    rdfs:range xsd:dateTime .
+
+# Throughput and data rate
+nxw:peakDataRate a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:string .
+
+nxw:uplinkThroughput a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:string .
+
+nxw:maxDownlinkThroughput a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:string .
+
+# Latency (specific uplink/downlink)
+nxw:uplinkLatency a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:decimal .
+
+nxw:downlinkLatency a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:decimal .
+
+# Density and Power
+nxw:connectionDensity a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:string .
+
+nxw:powerEfficiency a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:string .
+
+# Packet loss (explicit ratio)
+nxw:packetLossRatio a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:decimal .
+
+# Reliability (percentage-based)
+nxw:reliability a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:decimal .
+
+nxw:deliveryExpectation a owl:DatatypeProperty ;
+    rdfs:domain nxw:QoSRequirement ;
+    rdfs:range xsd:decimal .
