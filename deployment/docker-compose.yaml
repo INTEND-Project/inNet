@@ -1,1 +1,123 @@
 
+
+services:
+  intent-translator-gui:
+    container_name: intent-translator-gui
+    image: rd-registry.nextworks.it:443/intent-translator-gui:master
+    ports: 
+      - "80:80"
+
+  intent-translator:
+    container_name: intent-translator
+    image: rd-registry.nextworks.it:443/intent-translator-backend:master
+    ports:
+      - "8080:8080"
+    environment:
+      - TRANSLATOR_ENV=production
+    depends_on:
+      - postgres
+
+
+  
+  intent-lcm-backend:
+    container_name: intent-lcm-backend
+    image: rd-registry.nextworks.it:443/intent-lcm:dev
+    ports:
+      - "8081:8080"
+    environment:
+      - BACKEND_ENV=production
+      - CL_GOVERNANCE_URL=http://cl-governance:8080/api/v1/
+    depends_on:
+      - postgres
+      - fuseki
+      - operation-manager
+
+  ontology-manager:
+    container_name: ontology-manager
+    image: rd-registry.nextworks.it:443/ontology-manager:intend
+    ports:
+      - "8082:8081"
+
+    depends_on:
+      - fuseki
+  
+
+  operation-manager:
+    container_name: operation-manager
+    image: rd-registry.nextworks.it:443/operation-manager:dev
+    ports:
+      - "8083:8080" 
+    depends_on:
+      - postgres
+      - kafka
+    environment:
+      - TASK_TOPIC=tasks
+      - TASK_RESPONSE_TOPIC=responses
+      - KAFKA_BOOTSTRAP_SERVERS=xxxx:9092
+  
+  fuseki:
+   
+    image: stain/jena-fuseki
+    container_name: fuseki
+    ports:
+      - "3030:3030"
+    environment:
+      - ADMIN_PASSWORD=admin
+    restart: unless-stopped 
+    volumes:
+      - fuseki-data:/fuseki
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: intent_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
+
+  kafka:
+    container_name: kafka
+    image: rd-registry.nextworks.it/odin-cp-kafka:master
+    ports:
+      - "9092:9092"
+    restart: always
+    environment:
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://XXXX:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    depends_on:
+      - zookeeper
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+  
+  
+  3gpp-nsmf-plugin:
+     image: rd-registry.nextworks.it:443/intent-3gpp-nsmf-plugin:master
+     container_name: 3gpp-nsmf-plugin
+     environment:
+       - KAFKA_BOOTSTRAP_SERVERS=XXXX:9092
+       - TASK_TOPIC=tasks
+       - TASK_RESPONSE_TOPIC=responses
+     ports:
+       - "8084:8080"
+     depends_on:
+       - kafka
+     
+volumes:
+  pgdata:
+  fuseki-data:
+ 
