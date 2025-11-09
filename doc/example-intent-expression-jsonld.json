@@ -1,0 +1,41 @@
+{
+   "@context": {
+      "nxwontology": "https://github.com/INTEND-Project/inNet/blob/main/doc/inNet-intent-ontology.ttl",
+     "icm":"http://tio.models.tmforum.org/tio/v3.6.0/IntentCommonModel/#",
+       "props": "http://localhost:8081/tmf-api/intentManagement/v5/intent/af03ad61-b097-481e-a6cc-3802df299227/",
+       "xsd": "http://www.w3.org/2001/XMLSchema#"
+   },
+  "log:allOf": [
+    {
+      "@id": "props:peakDataRate",
+      "icm:value" : "high",
+      "@type":"nxwontology:peakDataRate"
+    },
+  
+     {
+       "@id":"props:maxDownlinkThroughput", 
+       "icm:value":"high", 
+       "@type" : "nxwontology:maxDownlinkThroughput"
+     }, 
+    {
+      "@id":"props:uplinkLatency", 
+      "icm:value":"10ms", 
+      "@type":"nxwontology:uplinkLatency"
+    },
+    {
+      "@id":"props:downlinkLatency", 
+      "icm:value":"10ms", 
+      "@type":"nxwontology:downlinkLatency"
+    }, 
+    {
+      "@id":"props:connectionDensity", 
+      "icm:value":"high", 
+      "@type":"nxwontology:connectionDensity"
+    }, 
+    {
+      "@id":"props:reliability", 
+      "icm:value":"99.99%", 
+      "@type":"nxwontology:reliability"
+    }
+    
+  ]}
