@@ -63,7 +63,7 @@ Key capabilities:
 
 **Create Intent — Example**
 
-> ![JSON-LD](doc/JSON-LD.png)
+> ![JSON-LD](doc/TMF formatted intent.png)
 
 > *Figure: JSON-LD Intent.*
 
